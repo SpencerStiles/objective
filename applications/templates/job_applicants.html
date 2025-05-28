@@ -20,17 +20,13 @@
                             {% if skill_count > 1 %}
                                 <tr>
                                     {% if forloop.first %}
-                                        <td rowspan="{{ job_item.total_rows }}" class="job-name">
-                                            {{ job.name }}
-                                        </td>
+                                        <td rowspan="{{ job_item.total_rows }}" class="job-name">{{ job.name }}</td>
                                     {% endif %}
-                                    <td rowspan="{{ skill_count }}">{{ applicant.name }}</td>
-                                    <td rowspan="{{ skill_count }}">
-                                        <a href="mailto:{{ applicant.email }}">{{ applicant.email }}</a>
-                                    </td>
+                                    <td rowspan="{{ skill_count }}" class="applicant-name">{{ applicant.name }}</td>
+                                    <td rowspan="{{ skill_count }}"><a href="mailto:{{ applicant.email }}">{{ applicant.email }}</a></td>
                                     <td rowspan="{{ skill_count }}">
                                         {% if applicant.website %}
-                                            <a href="{{ applicant.website }}" target="_blank">{{ applicant.website }}</a>
+                                            <a href="{{ applicant.website }}">{{ applicant.website }}</a>
                                         {% else %}
                                             ---
                                         {% endif %}
@@ -38,29 +34,21 @@
                                     {% for skill in applicant.skills.all %}
                                         {% if not forloop.first %}<tr>{% endif %}
                                         <td>{{ skill.name }}</td>
-                                        {% if forloop.first %}
-                                            <td rowspan="{{ skill_count }}">
-                                                {{ applicant.cover_letter|truncatewords:30 }}
-                                            </td>
-                                        {% endif %}
+                                        {% if forloop.first %}<td rowspan="{{ skill_count }}">{{ applicant.cover_letter }}</td>{% endif %}
                                         {% if not forloop.last %}</tr>{% endif %}
                                     {% empty %}
                                         <td>No skills listed</td>
-                                        <td>{{ applicant.cover_letter|truncatewords:30 }}</td>
+                                        <td>{{ applicant.cover_letter }}</td>
                                     {% endfor %}
                                 </tr>
                             {% else %}
                                 <tr>
-                                    {% if forloop.first %}
-                                        <td rowspan="{{ job_item.total_rows }}" class="job-name">
-                                            {{ job.name }}
-                                        </td>
-                                    {% endif %}
+                                    {% if forloop.first %}<td rowspan="{{ job_item.total_rows }}" class="job-name">{{ job.name }}</td>{% endif %}
                                     <td>{{ applicant.name }}</td>
                                     <td><a href="mailto:{{ applicant.email }}">{{ applicant.email }}</a></td>
                                     <td>
                                         {% if applicant.website %}
-                                            <a href="{{ applicant.website }}" target="_blank">{{ applicant.website }}</a>
+                                            <a href="{{ applicant.website }}">{{ applicant.website }}</a>
                                         {% else %}
                                             ---
                                         {% endif %}
@@ -74,7 +62,7 @@
                                             No skills listed
                                         {% endif %}
                                     </td>
-                                    <td>{{ applicant.cover_letter|truncatewords:30 }}</td>
+                                    <td>{{ applicant.cover_letter }}</td>
                                 </tr>
                             {% endif %}
                         {% endwith %}
@@ -84,9 +72,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6">
-                    {{ total_applicants }} Applicants, {{ total_skills }} Unique Skills
-                </td>
+                <td colspan="6">{{ total_applicants }} Applicants, {{ total_skills }} Unique Skills</td>
             </tr>
         </tfoot>
     </table>
